@@ -35,7 +35,7 @@ class SearchViewController: UITableViewController {
         )
         resultsContainerViewController.didSelect = search
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = "App Store"
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -48,6 +48,7 @@ class SearchViewController: UITableViewController {
     /// - Parameter term: Term to search on the App Store.
     private func search(term: String) {
         searchController.searchBar.text = term
+        SearchHistory.insert(term)
         searchType = .final
         searchController.isActive = true
         searchController.searchBar.resignFirstResponder()
@@ -64,6 +65,8 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         navigationController?.navigationBar.setShadow(hidden: true)
+        trendingDataSourceDelegate.terms = SearchHistory.get()
+        tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

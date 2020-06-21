@@ -18,7 +18,7 @@ class SuggestedTermsTableViewController: UITableViewController {
             }
         }
     }
-    private var terms: [Term] = Bundle.main.loadJSONFile(named: "terms")
+    var terms = SearchHistory.get()
     private var currentNames = [String]()
     var didSelect: (String) -> Void = { _ in }
 
@@ -38,9 +38,12 @@ class SuggestedTermsTableViewController: UITableViewController {
     }
     
     func namesWith(prefix: String) -> [String] {
+//        return terms
+//            .filter { $0.name.hasCaseInsensitivePrefix(prefix) }
+//            .sorted { $0.popularity > $1.popularity }
+//            .map    { $0.name }
         return terms
-            .filter { $0.name.hasCaseInsensitivePrefix(prefix) }
-            .sorted { $0.popularity > $1.popularity }
-            .map    { $0.name }
+            .filter{ $0.hasCaseInsensitivePrefix(prefix) }
+            .map{ $0 }
     }
 }

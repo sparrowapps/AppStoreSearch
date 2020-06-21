@@ -9,9 +9,8 @@
 import UIKit
 
 class TrendingDataSourceDelegate: NSObject {
-    
-    private let terms = ["instagram", "snapchat", "twitter",
-                         "design+code", "amazon", "tinder", "ted"]
+    private static let showCount = 7
+    var terms = SearchHistory.get()
     var didSelect: (String) -> Void = { _ in }
 }
 
@@ -22,7 +21,7 @@ extension TrendingDataSourceDelegate: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return terms.count
+        return terms.count > TrendingDataSourceDelegate.showCount ? TrendingDataSourceDelegate.showCount : terms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
