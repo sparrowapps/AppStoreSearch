@@ -19,6 +19,9 @@ struct App: Decodable {
     var icon: String
     var screenshots: [String]
     
+    let averageUserRatingForCurrentVersion: Double?
+    let userRatingCountForCurrentVersion: Int?
+    
     var media: [String] {
         var images = screenshots
         images.insert(icon, at: 0)
@@ -30,5 +33,7 @@ struct App: Decodable {
         case genre = "primaryGenreName"
         case icon = "artworkUrl512"
         case screenshots = "screenshotUrls"
+        case averageUserRatingForCurrentVersion
+        case userRatingCountForCurrentVersion
     }
 }

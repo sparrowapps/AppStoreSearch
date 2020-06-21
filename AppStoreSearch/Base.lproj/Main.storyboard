@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search-->
+        <!--검색-->
         <scene sceneID="jOD-RY-jXM">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="97z-Vy-LyH" customClass="SearchViewController" customModule="AppStoreSearch" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,8 +20,8 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybn-YH-gYu">
-                                    <rect key="frame" x="15" y="21.5" width="92" height="27"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최근 검색어" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybn-YH-gYu">
+                                    <rect key="frame" x="15" y="21.5" width="100" height="27"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -63,7 +63,7 @@
                             <outlet property="delegate" destination="97z-Vy-LyH" id="A47-Dx-dxM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Search" id="QGY-k4-dtA"/>
+                    <navigationItem key="navigationItem" title="검색" id="QGY-k4-dtA"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ppt-S5-Up3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

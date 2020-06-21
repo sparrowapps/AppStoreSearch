@@ -7,13 +7,11 @@
 //
 
 import UIKit
-//import Kingfisher
 
 class AppsTableViewController: UITableViewController {
     
     var apps = [App]()
     var dataTask: URLSessionDataTask?
-//    var imagePrefetcher: ImagePrefetcher?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +44,13 @@ class AppsTableViewController: UITableViewController {
         dataTask?.cancel()
         let encodedTerm = term
             .addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        let url = URL(string: "https://itunes.apple.com/search?term=\(encodedTerm ?? String())&entity=software,iPadSoftware&limit=10")!
+        let url = URL(string: "https://itunes.apple.com/search?term=\(encodedTerm ?? String())&entity=software,iPadSoftware&limit=10&country=kr&lang=ko_kr")!
         dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
             do {
+                print(data)
                 let response = try JSONDecoder().decode(AppResponse.self, from: data)
+               
                self.handle(response: response)
             } catch {
                 print(error)
@@ -64,11 +64,6 @@ class AppsTableViewController: UITableViewController {
     /// - Parameter response: AppResponse retrieved from the network.
     private func handle(response: AppResponse) {
         apps = response.results
-        let mediaUrls = apps
-            .flatMap { $0.media }
-            .compactMap { URL(string: $0) }
-//        imagePrefetcher = ImagePrefetcher(urls: mediaUrls)
-//        imagePrefetcher?.start()
         
         DispatchQueue.main.async {
             self.tableView.reloadData()

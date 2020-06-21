@@ -1,16 +1,20 @@
 PODS:
+  - Cosmos (18.0.1)
   - RxSwift (5.1.1)
 
 DEPENDENCIES:
+  - Cosmos (~> 18.0)
   - RxSwift (~> 5)
 
 SPEC REPOS:
   trunk:
+    - Cosmos
     - RxSwift
 
 SPEC CHECKSUMS:
+  Cosmos: 7dfaa3f52584ca5f94ab74b5c2e264019cc9f7f5
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 5caf173f47206df01f8ceb976f216681758a489d
+PODFILE CHECKSUM: 69333c805508af771f7a72d460a5c75a6f37651e
 
 COCOAPODS: 1.9.3
