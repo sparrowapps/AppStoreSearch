@@ -8,8 +8,6 @@
 
 import UIKit
 import RxSwift
-//import RxCocoa
-
 
 extension UIImageView {
     
@@ -21,7 +19,6 @@ extension UIImageView {
             .subscribe(onNext: { [weak self] imageData in
                 self?.image = UIImage(data: imageData)
                 }, onError: { error in
-//                    Log.error(error.localizedDescription, error)
                     Log.e(error.localizedDescription)
             })
     }

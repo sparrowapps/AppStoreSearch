@@ -13,6 +13,8 @@ class ResultsContainerViewController: ContentStateViewController {
     private var suggestionsViewController: SuggestedTermsTableViewController!
     var didSelect: (String) -> Void = { _ in }
     
+    var nav : UINavigationController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -39,6 +41,7 @@ class ResultsContainerViewController: ContentStateViewController {
             /// final search is a lot less frequent than the
             /// active suggestions.
             let appsListViewController = AppsTableViewController()
+            appsListViewController.nav = self.nav
             appsListViewController.search(term: term)
             transition(to: .render(appsListViewController))
         }

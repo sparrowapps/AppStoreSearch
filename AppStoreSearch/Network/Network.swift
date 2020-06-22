@@ -73,11 +73,8 @@ class Network {
             
             urlComponents?.queryItems = query
         }
-        
-        
         return urlComponents?.url
     }
-    
     
     private func request(with url: URL, method: HTTP, completion: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask {
         var request = URLRequest(url: url, timeoutInterval: 30)

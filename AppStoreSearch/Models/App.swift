@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 struct AppResponse: Decodable {
     var resultCount: Int
     var results: [App]
@@ -18,6 +19,17 @@ struct App: Decodable {
     var genre: String
     var icon: String
     var screenshots: [String]
+    var description: String
+    let artistName: String
+    let averageUserRating: Double?
+    let version: String
+    let releaseNotes: String?
+    let sellerName: String
+    let fileSizeBytes: String
+    let trackContentRating: String
+    
+    let trackID: Int
+    let artistID: Int
     
     let averageUserRatingForCurrentVersion: Double?
     let userRatingCountForCurrentVersion: Int?
@@ -35,5 +47,24 @@ struct App: Decodable {
         case screenshots = "screenshotUrls"
         case averageUserRatingForCurrentVersion
         case userRatingCountForCurrentVersion
+        case description
+        case artistName
+        case averageUserRating
+        case version
+        case releaseNotes
+        case sellerName
+        case fileSizeBytes
+        case trackContentRating
+        case trackID = "trackId"
+        case artistID = "artistId"
+    }
+}
+
+struct AppDetail {
+    let item:[String:Any]
+
+    static func parseJSON(_ json: [String:Any]) -> [AppDetail] {
+        guard let res = json["results"] as? [[String:Any]] else { return [] }
+        return res.map {return AppDetail(item: $0)}
     }
 }

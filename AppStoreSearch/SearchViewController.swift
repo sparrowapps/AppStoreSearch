@@ -27,6 +27,8 @@ class SearchViewController: UITableViewController {
         extendedLayoutIncludesOpaqueBars = true
         setSearchController()
         navigationController?.navigationBar.setShadow(hidden: true)
+        
+        
     }
     
     private func setSearchController() {
@@ -34,6 +36,9 @@ class SearchViewController: UITableViewController {
             searchResultsController: resultsContainerViewController
         )
         resultsContainerViewController.didSelect = search
+        
+        resultsContainerViewController.nav = navigationController
+        
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "App Store"
         searchController.searchResultsUpdater = self

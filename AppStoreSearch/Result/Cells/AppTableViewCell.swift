@@ -42,8 +42,6 @@ class AppTableViewCell: UITableViewCell, ReusableView, NibLoadableView {
     }
     
     func cancel() {
-//        iconImageView.kf.cancelDownloadTask()
-//        screenshotImageViews.forEach { $0.kf.cancelDownloadTask() }
     }
     
     private func makeratingCountLabel(value: Int?) -> String {

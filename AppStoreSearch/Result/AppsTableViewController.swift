@@ -8,10 +8,11 @@
 
 import UIKit
 
-class AppsTableViewController: UITableViewController {
+class AppsTableViewController: UITableViewController, AppsDetailViewControllerDelegate {
     
     var apps = [App]()
     var dataTask: URLSessionDataTask?
+    var nav: UINavigationController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,37 @@ class AppsTableViewController: UITableViewController {
         guard let cell = cell as? AppTableViewCell else { return }
         cell.cancel()
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var searchDetailVC: AppsDetailViewController!
+        
+        searchDetailVC =  storyboard.instantiateViewController(withIdentifier: "SearchDetailViewController") as? AppsDetailViewController
+        searchDetailVC.delegate = self
+        self.id = apps[indexPath.row].trackID
+        
+        self.nav?.pushViewController(searchDetailVC, animated: true)
+    }
+    
+    // MARK: - AppsDetailViewControllerDelegate
+    private var id: Int = -1
+    func fetchLookup(withSuccessHandler success: @escaping (_ response: AppResponse) -> ()) {
+        dataTask?.cancel()
+        let url = URL(string: "https://itunes.apple.com/lookup?id=\(id)&country=kr&lang=ko_kr")!
+        dataTask = URLSession.shared.dataTask(with: url) { (data, _, _) in
+            guard let data = data else { return }
+            do {
+                
+                let response = try JSONDecoder().decode(AppResponse.self, from: data)
+                
+                success(response)
+            } catch {
+                print(error)
+            }
+        }
+        dataTask?.resume()
+    }
 
     /// Searches the input on https://itunes.apple.com/.
     /// For the purpose of a simple blog post this is network call
@@ -48,14 +80,13 @@ class AppsTableViewController: UITableViewController {
         dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
             do {
-                print(data)
                 let response = try JSONDecoder().decode(AppResponse.self, from: data)
-               
-               self.handle(response: response)
+                
+                self.handle(response: response)
             } catch {
                 print(error)
             }
-            }
+        }
         dataTask?.resume()
     }
     
