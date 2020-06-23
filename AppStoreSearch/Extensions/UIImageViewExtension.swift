@@ -2,8 +2,8 @@
 //  UIImageViewExtension.swift
 //  appstoreSearch
 //
-//  Created by Elon on 20/03/2019.
-//  Copyright © 2019 Elon. All rights reserved.
+//  Created by sparrow on 2020/06/20.
+//  Copyright © 2020 sparrowapps. All rights reserved.
 //
 
 import UIKit

@@ -40,6 +40,34 @@ enum NetworkError: LocalizedError {
 class Network {
     static var shared = Network()
     private init() {}
+    
+    func requestSearch(by requestURL: URL?) -> Observable<AppResponse> {
+        return Observable.create { [unowned self] observer in
+            guard let url = requestURL else {
+                observer.onError(NetworkError.url)
+                return Disposables.create()
+            }
+
+            let task = self.request(with: url, method: .get) { data, error  in
+
+                if let error = error {
+                    observer.onError(error)
+                } else {
+                    do {
+                        guard let data = data else { throw NetworkError.responseData }
+                        let result = try JSONDecoder().decode(AppResponse.self, from: data)
+                        observer.onNext(result)
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(error)
+                    }
+                }
+            }
+            return Disposables.create(with: task.cancel)
+        }
+    }
+    
+    
     func requestImage(urlString: String) -> Observable<Data> {
         return Observable.create { [unowned self] observer in
             guard let url = self.requsetURL(urlString) else {

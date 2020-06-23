@@ -11,7 +11,7 @@ import UIKit
 import RxCocoa
 
 protocol AppsDetailViewControllerDelegate: class {
-    func fetchLookup(withSuccessHandler success: @escaping (_ response: AppResponse) -> ())
+    func fetchLookup(complete success: @escaping (_ response: AppResponse) -> ())
 }
 
 final class AppsDetailViewController: UIViewController  {
@@ -73,7 +73,7 @@ final class AppsDetailViewController: UIViewController  {
             return UITableViewCell()
         }.disposed(by: disposeBag)
         
-        delegate?.fetchLookup(withSuccessHandler: { (response) in
+        delegate?.fetchLookup(complete: { (response) in
             guard let apps = response.results.first else { return }
 
             self.section.accept([

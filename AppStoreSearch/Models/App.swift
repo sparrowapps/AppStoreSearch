@@ -59,12 +59,3 @@ struct App: Decodable {
         case artistID = "artistId"
     }
 }
-
-struct AppDetail {
-    let item:[String:Any]
-
-    static func parseJSON(_ json: [String:Any]) -> [AppDetail] {
-        guard let res = json["results"] as? [[String:Any]] else { return [] }
-        return res.map {return AppDetail(item: $0)}
-    }
-}

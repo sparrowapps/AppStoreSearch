@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import RxSwift
 
 class AppsTableViewController: UITableViewController, AppsDetailViewControllerDelegate {
     
     var apps = [App]()
-    var dataTask: URLSessionDataTask?
     var nav: UINavigationController?
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,22 +51,17 @@ class AppsTableViewController: UITableViewController, AppsDetailViewControllerDe
     
     // MARK: - AppsDetailViewControllerDelegate
     private var id: Int = -1
-    func fetchLookup(withSuccessHandler success: @escaping (_ response: AppResponse) -> ()) {
-        dataTask?.cancel()
-        let url = URL(string: "https://itunes.apple.com/lookup?id=\(id)&country=kr&lang=ko_kr")!
-        dataTask = URLSession.shared.dataTask(with: url) { (data, _, _) in
-            guard let data = data else { return }
-            do {
-                
-                let response = try JSONDecoder().decode(AppResponse.self, from: data)
-                
+    
+    func fetchLookup(complete success: @escaping (_ response: AppResponse) -> ()) {
+        let url = URL(string: "https://itunes.apple.com/lookup?id=\(id)&country=kr&lang=ko_kr")
+        Network.shared.requestSearch(by: url)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.asyncInstance)
+            .subscribe(onNext: { response in
                 success(response)
-            } catch {
-                print(error)
-            }
-        }
-        dataTask?.resume()
+            }).disposed(by: disposeBag)
     }
+    
 
     /// Searches the input on https://itunes.apple.com/.
     /// For the purpose of a simple blog post this is network call
@@ -73,31 +69,23 @@ class AppsTableViewController: UITableViewController, AppsDetailViewControllerDe
     ///
     /// - Parameter term: Term to search.
     func search(term: String) {
-        dataTask?.cancel()
         let encodedTerm = term
             .addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        let url = URL(string: "https://itunes.apple.com/search?term=\(encodedTerm ?? String())&entity=software,iPadSoftware&limit=10&country=kr&lang=ko_kr")!
-        dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data else { return }
-            do {
-                let response = try JSONDecoder().decode(AppResponse.self, from: data)
-                
-                self.handle(response: response)
-            } catch {
-                print(error)
-            }
-        }
-        dataTask?.resume()
+        let url = URL(string: "https://itunes.apple.com/search?term=\(encodedTerm ?? String())&entity=software,iPadSoftware&limit=10&country=kr&lang=ko_kr")
+        Network.shared.requestSearch(by: url)
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.asyncInstance)
+            .subscribe(onNext: { [weak self] response in
+                self?.handle(response: response)
+                }, onError: { error in
+                    Log.e(error.localizedDescription)
+            }).disposed(by: disposeBag)
     }
-    
     /// Handles the networking response with the searched apps.
     ///
     /// - Parameter response: AppResponse retrieved from the network.
     private func handle(response: AppResponse) {
         apps = response.results
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
 }
