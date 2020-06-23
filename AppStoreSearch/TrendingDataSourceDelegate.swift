@@ -9,7 +9,7 @@
 import UIKit
 
 class TrendingDataSourceDelegate: NSObject {
-    private static let showCount = 7
+    private static let showCount = 20
     var terms = SearchHistory.get()
     var didSelect: (String) -> Void = { _ in }
 }

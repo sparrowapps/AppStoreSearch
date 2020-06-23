@@ -15,6 +15,10 @@ class AppsTableViewController: UITableViewController, AppsDetailViewControllerDe
     var nav: UINavigationController?
     private let disposeBag = DisposeBag()
     
+    deinit {
+        Log.v("deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(AppTableViewCell.self)
@@ -77,10 +81,10 @@ class AppsTableViewController: UITableViewController, AppsDetailViewControllerDe
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] response in
                 self?.handle(response: response)
-                }, onError: { error in
-                    Log.e(error.localizedDescription)
+     
             }).disposed(by: disposeBag)
     }
+    
     /// Handles the networking response with the searched apps.
     ///
     /// - Parameter response: AppResponse retrieved from the network.

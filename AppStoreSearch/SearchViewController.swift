@@ -16,6 +16,10 @@ class SearchViewController: UITableViewController {
         ResultsContainerViewController()
     private var searchType: SearchType = .final
     
+    deinit {
+        Log.v("deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = trendingDataSourceDelegate

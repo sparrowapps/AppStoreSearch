@@ -15,6 +15,10 @@ class ResultsContainerViewController: ContentStateViewController {
     
     var nav : UINavigationController?
     
+    deinit {
+        Log.v("deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

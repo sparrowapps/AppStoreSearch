@@ -18,9 +18,14 @@ class SuggestedTermsTableViewController: UITableViewController {
             }
         }
     }
+    
     var terms = SearchHistory.get()
     private var currentNames = [String]()
     var didSelect: (String) -> Void = { _ in }
+    
+    deinit {
+        Log.v("deinit")
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentNames.count

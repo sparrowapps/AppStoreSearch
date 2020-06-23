@@ -21,6 +21,10 @@ final class AppsDetailViewController: UIViewController  {
     
     private let disposeBag = DisposeBag()
     
+    deinit {
+        Log.v("deinit")
+    }
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.backgroundColor = .systemBackground
@@ -51,32 +55,31 @@ final class AppsDetailViewController: UIViewController  {
     }
     
     func bindTableView() {
-        section.bind(to: tableView.rx.items) { (tv, idx, ele) -> UITableViewCell in
+        section.bind(to: tableView.rx.items) { [weak self] (tv, idx, ele) -> UITableViewCell in
             if tv.dequeueReusableCell(withIdentifier: "DescCell", for: IndexPath(row: idx, section: 0)) is DescCell{
-                return self.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0))
+                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
             }
             if tv.dequeueReusableCell(withIdentifier: "MoreCell", for: IndexPath(row: idx, section: 0)) is MoreCell{
-                return self.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0))
+                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
             }
             if tv.dequeueReusableCell(withIdentifier: "ReviewCell", for: IndexPath(row: idx, section: 0)) is ReviewCell{
-                return self.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0))
+                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
             }
             if tv.dequeueReusableCell(withIdentifier: "NewCell", for: IndexPath(row: idx, section: 0)) is NewCell{
-                return self.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0))
+                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
             }
             if tv.dequeueReusableCell(withIdentifier: "InfoCell", for: IndexPath(row: idx, section: 0)) is InfoCell{
-                return self.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0))
+                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
             }
             if tv.dequeueReusableCell(withIdentifier: "HelperCell", for: IndexPath(row: idx, section: 0)) is HelperCell{
-                return self.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0))
+                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
             }
             return UITableViewCell()
         }.disposed(by: disposeBag)
         
-        delegate?.fetchLookup(complete: { (response) in
+        delegate?.fetchLookup(complete: { [weak self] response in
             guard let apps = response.results.first else { return }
-
-            self.section.accept([
+            self?.section.accept([
                 DescSection(artWork: apps.icon,
                             trackName: apps.name,
                             screenshotUrls: apps.screenshots,
