@@ -14,7 +14,6 @@ extension UIImageView {
     func rx_setImage(by urlString: String) -> Disposable {
         return Network.shared.requestImage(urlString: urlString)
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .retry(2)
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] imageData in
                 self?.image = UIImage(data: imageData)

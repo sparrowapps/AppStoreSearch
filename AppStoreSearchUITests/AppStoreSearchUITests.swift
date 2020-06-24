@@ -34,6 +34,10 @@ class AppStoreSearchUITests: XCTestCase {
         let app = XCUIApplication()
         app.staticTexts["검색"].tap()
         app.staticTexts["최근 검색어"].tap()
+        
+        let searchBarElement = app.descendants(matching: .any).matching(identifier: "search-bar").firstMatch
+        searchBarElement.tap()
+        
     }
     
 }

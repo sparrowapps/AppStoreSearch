@@ -49,7 +49,6 @@ class AppStoreSearchTests: XCTestCase {
     func testNetworkRequestImage() {
         Network.shared.requestImage(urlString: "https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/7a/9c/6e/7a9c6e68-6f25-3aa4-703f-5763aaf78731/source/512x512bb.jpg")
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-            .retry(2)
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: {  imageData in
                 XCTAssert(imageData.count == 11228)
@@ -88,6 +87,12 @@ class AppStoreSearchTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+            Network.shared.requestImage(urlString: "https://is4-ssl.mzstatic.com/image/thumb/Purple113/v4/7a/9c/6e/7a9c6e68-6f25-3aa4-703f-5763aaf78731/source/512x512bb.jpg")
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+            .observeOn(MainScheduler.asyncInstance)
+            .subscribe(onNext: {  imageData in
+                
+            }).disposed(by: disposeBag)
         }
     }
     

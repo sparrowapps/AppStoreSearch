@@ -21,12 +21,9 @@ class DescCell: UITableViewCell {
     
     @IBOutlet weak var categoryRankLabel: UILabel!
     @IBOutlet weak var trackContentRatingLabel: UILabel! //연령
-    
     @IBOutlet weak var genreLabel: UILabel!
     
-    var disposeBag: DisposeBag?
     var url = BehaviorRelay<[String]>(value: [])
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,20 +37,13 @@ class DescCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        self.disposeBag = nil
-    }
-    
     func configureCV(){
         let disposeBag = DisposeBag()
 
-        url
-            .bind(to: self.screenCV.rx.items(cellIdentifier: "DescScreenCell", cellType: DescScreenCell.self)) { (idx, url, cell) in
-                cell.screenShotImageView
-                    .rx_setImage(by: url)
-                    .disposed(by: disposeBag)
+        url.bind(to: self.screenCV.rx.items(cellIdentifier: "DescScreenCell", cellType: DescScreenCell.self)) { (idx, url, cell) in
+            cell.screenShotImageView
+                .rx_setImage(by: url)
+                .disposed(by: disposeBag)
         }
         .disposed(by: disposeBag)
     }

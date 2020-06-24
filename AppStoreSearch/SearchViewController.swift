@@ -46,6 +46,8 @@ class SearchViewController: UITableViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "App Store"
         searchController.searchResultsUpdater = self
+        searchController.searchBar.isAccessibilityElement = true
+        searchController.searchBar.accessibilityIdentifier = "search-bar"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
