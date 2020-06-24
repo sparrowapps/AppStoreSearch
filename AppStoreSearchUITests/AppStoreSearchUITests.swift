@@ -31,6 +31,9 @@ class AppStoreSearchUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let app = XCUIApplication()
+        app.staticTexts["검색"].tap()
+        app.staticTexts["최근 검색어"].tap()
     }
     
 }
