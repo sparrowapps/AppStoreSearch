@@ -55,24 +55,24 @@ final class AppsDetailViewController: UIViewController  {
     }
     
     func bindTableView() {
-        section.bind(to: tableView.rx.items) { [weak self] (tv, idx, ele) -> UITableViewCell in
-            if tv.dequeueReusableCell(withIdentifier: "DescCell", for: IndexPath(row: idx, section: 0)) is DescCell{
-                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
+        section.bind(to: tableView.rx.items) { [weak self] (tableView, index, _) -> UITableViewCell in
+            if tableView.dequeueReusableCell(withIdentifier: "DescCell", for: IndexPath(row: index, section: 0)) is DescCell {
+                return (self?.section.value[index].configureCell(tableView: tableView, indexPath: IndexPath(row: index, section: 0)))!
             }
-            if tv.dequeueReusableCell(withIdentifier: "MoreCell", for: IndexPath(row: idx, section: 0)) is MoreCell{
-                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
+            if tableView.dequeueReusableCell(withIdentifier: "MoreCell", for: IndexPath(row: index, section: 0)) is MoreCell {
+                return (self?.section.value[index].configureCell(tableView: tableView, indexPath: IndexPath(row: index, section: 0)))!
             }
-            if tv.dequeueReusableCell(withIdentifier: "ReviewCell", for: IndexPath(row: idx, section: 0)) is ReviewCell{
-                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
+            if tableView.dequeueReusableCell(withIdentifier: "ReviewCell", for: IndexPath(row: index, section: 0)) is ReviewCell {
+                return (self?.section.value[index].configureCell(tableView: tableView, indexPath: IndexPath(row: index, section: 0)))!
             }
-            if tv.dequeueReusableCell(withIdentifier: "NewCell", for: IndexPath(row: idx, section: 0)) is NewCell{
-                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
+            if tableView.dequeueReusableCell(withIdentifier: "NewCell", for: IndexPath(row: index, section: 0)) is NewCell {
+                return (self?.section.value[index].configureCell(tableView: tableView, indexPath: IndexPath(row: index, section: 0)))!
             }
-            if tv.dequeueReusableCell(withIdentifier: "InfoCell", for: IndexPath(row: idx, section: 0)) is InfoCell{
-                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
+            if tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: IndexPath(row: index, section: 0)) is InfoCell {
+                return (self?.section.value[index].configureCell(tableView: tableView, indexPath: IndexPath(row: index, section: 0)))!
             }
-            if tv.dequeueReusableCell(withIdentifier: "HelperCell", for: IndexPath(row: idx, section: 0)) is HelperCell{
-                return (self?.section.value[idx].configureCell(tableView: tv, indexPath: IndexPath(row: idx, section: 0)))!
+            if tableView.dequeueReusableCell(withIdentifier: "HelperCell", for: IndexPath(row: index, section: 0)) is HelperCell {
+                return (self?.section.value[index].configureCell(tableView: tableView, indexPath: IndexPath(row: index, section: 0)))!
             }
             return UITableViewCell()
         }.disposed(by: disposeBag)
